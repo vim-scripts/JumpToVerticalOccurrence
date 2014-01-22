@@ -1,0 +1,134 @@
+*JumpToVerticalOccurrence.txt*	Like f{char}, but searching the same screen column, not line.
+
+		JUMP TO VERTICAL OCCURRENCE    by Ingo Karkat
+						*JumpToVerticalOccurrence.vim*
+description			|JumpToVerticalOccurrence-description|
+usage				|JumpToVerticalOccurrence-usage|
+installation			|JumpToVerticalOccurrence-installation|
+configuration			|JumpToVerticalOccurrence-configuration|
+limitations			|JumpToVerticalOccurrence-limitations|
+known problems			|JumpToVerticalOccurrence-known-problems|
+todo				|JumpToVerticalOccurrence-todo|
+history				|JumpToVerticalOccurrence-history|
+
+==============================================================================
+DESCRIPTION				*JumpToVerticalOccurrence-description*
+
+The |f| / |F| commands allow you to quickly go to next / previous occurrences
+of a character in the same line (with plugins also across lines), but are
+limited to horizontal movement. But vertical movement, restricted to the same
+screen column the cursor is in, across lines would often be helpful, too.
+
+This plugin provides a |]V|{char} mapping that works just like |f|, but
+vertically. The |]v| mapping is similar, but uses the character under the
+cursor instead of querying for it (which is a more common use case when moving
+vertically).
+The ]| mapping is helpful for jumping out of indented blocks, or to filled-out
+columns, as it moves to the next non-whitespace in the current column.
+In long sorted lists, one often wants to go to the first / last instance of
+the current character (e.g. to move from "[A]ddress" to "Aardvark" or the last
+"Azure" before the entries with "B" begin). The |]!| mapping does that.
+
+SOURCE									     *
+
+The ]| mapping was inspired by
+    http://stackoverflow.com/questions/20882722/move-to-the-next-row-which-has-non-white-space-character-in-the-same-column-in-v
+
+SEE ALSO								     *
+
+- The |JumpToLastOccurrence.vim| plugin (vimscript #3386) still moves
+  horizontally in the same line, but counts the characters in reverse,
+  starting from the last one.
+- Check out the |CountJump.vim| plugin page (vimscript #3130) for a full list
+  of motions and text objects powered by it.
+
+==============================================================================
+USAGE					      *JumpToVerticalOccurrence-usage*
+
+					 *]v* *[v* *v_]v* *v_[v* *o_]v* *o_[v*
+]v		    To [count]'th occurrence of the character under the cursor
+		    in the same screen column of following lines.
+[v		    To [count]'th occurrence of the character under the cursor
+		    in the same screen column of previous lines.
+
+					 *]V* *[V* *v_]V* *v_[V* *o_]V* *o_[V*
+]V{char}	    To [count]'th occurrence of {char} in the same screen
+		    column of following lines. Like |f|, but vertically.
+[V{char}	    To [count]'th occurrence of {char} in the same screen
+		    column of previous lines. Like |F|, but vertically.
+		    You can quickly repeat the same motion via the |]v| / |[v|
+		    mappings (like |;| / |,| for |f|).
+
+			     *]bar* *[bar* *v_]bar* *v_[bar* *o_]bar* *o_[bar*
+]|		    To [count]'th next line that has non-whitespace in the
+		    same column as the current one.
+[|		    To [count]'th previous line that has non-whitespace in the
+		    same column as the current one.
+
+					 *]!* *[!* *v_]!* *v_[!* *o_]!* *o_[!*
+]!		    To the last continuous occurrence of the character under
+		    the cursor in the same screen column. With any [count],
+		    skips over whitespace and shorter lines.
+[!		    To the first continuous occurrence of the character under
+		    the cursor in the same screen column. With any [count],
+		    skips over whitespace and shorter lines.
+		    Mnemonic: The ! looks like a column, with the dot marking
+		    the jump target.
+
+==============================================================================
+INSTALLATION			       *JumpToVerticalOccurrence-installation*
+
+This script is packaged as a |vimball|. If you have the "gunzip" decompressor
+in your PATH, simply edit the *.vmb.gz package in Vim; otherwise, decompress
+the archive first, e.g. using WinZip. Inside Vim, install by sourcing the
+vimball or via the |:UseVimball| command. >
+    vim JumpToVerticalOccurrence*.vmb.gz
+    :so %
+To uninstall, use the |:RmVimball| command.
+
+DEPENDENCIES			       *JumpToVerticalOccurrence-dependencies*
+
+- Requires Vim 7.0 or higher.
+- Requires the CountJump plugin (vimscript #3130), version 1.60 or higher.
+- Requires the |ingo-library.vim| plugin (vimscript #4433), version 1.016 or
+  higher.
+- repeat.vim (vimscript #2136) plugin (optional)
+
+==============================================================================
+CONFIGURATION			      *JumpToVerticalOccurrence-configuration*
+
+For a permanent configuration, put the following commands into your |vimrc|:
+					      *JumpToVerticalOccurrence-remap*
+To change the default motion mappings, use: >
+    let g:JumpToVerticalOccurrence_CharUnderCursorMapping = 'v'
+    let g:JumpToVerticalOccurrence_QueriedMapping = 'V'
+    let g:JumpToVerticalOccurrence_NonWhitespaceMapping = '<Bar>'
+    let g:JumpToVerticalOccurrence_LastSameCharMapping = '!'
+To also change the [ / ] prefix to something else, follow the instructions for
+|CountJump-remap-motions|. (This requires CountJump 1.60.)
+
+==============================================================================
+LIMITATIONS				*JumpToVerticalOccurrence-limitations*
+
+KNOWN PROBLEMS			     *JumpToVerticalOccurrence-known-problems*
+
+TODO					       *JumpToVerticalOccurrence-todo*
+
+IDEAS					      *JumpToVerticalOccurrence-ideas*
+
+==============================================================================
+HISTORY					    *JumpToVerticalOccurrence-history*
+
+1.00	22-Jan-2014
+First published version.
+
+0.01	02-Jan-2014
+Started development.
+
+==============================================================================
+Copyright: (C) 2014 Ingo Karkat
+The VIM LICENSE applies to this plugin; see |copyright|.
+
+Maintainer:	Ingo Karkat <ingo@karkat.de>
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:
