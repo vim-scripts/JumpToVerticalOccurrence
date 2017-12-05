@@ -48,7 +48,9 @@ endif
 if ! exists('g:JumpToVerticalOccurrence_LastSameCharMapping')
     let g:JumpToVerticalOccurrence_LastSameCharMapping = '!'
 endif
-
+if ! exists('g:JumpToVerticalOccurrence_LastNonWhitespaceMapping')
+    let g:JumpToVerticalOccurrence_LastNonWhitespaceMapping = 'w'
+endif
 
 "- mappings --------------------------------------------------------------------
 
@@ -81,6 +83,12 @@ call CountJump#Motion#MakeBracketMotionWithJumpFunctions(
 \   '', g:JumpToVerticalOccurrence_LastSameCharMapping, '',
 \   function('JumpToVerticalOccurrence#LastSameCharForward'),
 \   function('JumpToVerticalOccurrence#LastSameCharBackward'),
+\   '', '', 0
+\)
+call CountJump#Motion#MakeBracketMotionWithJumpFunctions(
+\   '', g:JumpToVerticalOccurrence_LastNonWhitespaceMapping, '',
+\   function('JumpToVerticalOccurrence#LastNonWhitespaceForward'),
+\   function('JumpToVerticalOccurrence#LastNonWhitespaceBackward'),
 \   '', '', 0
 \)
 
