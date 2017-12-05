@@ -116,7 +116,7 @@ function! s:Jump( target, mode, directionFlag )
     endif
 
 	let l:virtCol = virtcol('.')
-	if a:target ==# 'cursor' || a:target ==# 'lastsame'
+	if a:target ==# 'cursor' || a:target ==# 'lastsame'|| a:target ==# 'lastnonewhite'
 	    let l:char = ingo#text#GetChar(getpos('.')[1:2])
 	endif
 
@@ -135,6 +135,8 @@ function! s:Jump( target, mode, directionFlag )
 
     if a:target ==# 'lastsame'
 	return s:LastSameJump(l:virtCol, l:pattern, l:count, a:directionFlag, a:mode)
+    elseif a:target ==# 'lastnonewhite'
+	return s:LastSameJump(l:virtCol, '\S', l:count, a:directionFlag, a:mode)
     else
 	let l:columnCharPattern = printf('\C\V\%%%dv%s', l:virtCol, l:pattern)
 	return CountJump#CountJump(a:mode, l:columnCharPattern, a:directionFlag . 'W')
@@ -177,6 +179,13 @@ function! JumpToVerticalOccurrence#LastSameCharForward( mode )
 endfunction
 function! JumpToVerticalOccurrence#LastSameCharBackward( mode )
     return s:Jump('lastsame', a:mode, 'b')
+endfunction
+
+function! JumpToVerticalOccurrence#LastNonWhitespaceForward( mode )
+    return s:Jump('lastnonewhite', a:mode, '')
+endfunction
+function! JumpToVerticalOccurrence#LastNonWhitespaceBackward( mode )
+    return s:Jump('lastnonewhite', a:mode, 'b')
 endfunction
 
 " vim: set ts=8 sts=4 sw=4 noexpandtab ff=unix fdm=syntax :
